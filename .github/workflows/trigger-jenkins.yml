@@ -1,0 +1,16 @@
+name: Trigger Jenkins Job on Commit
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger-jenkins:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Jenkins Build
+        run: |
+          curl -X POST "http://13.60.193.240:8080/job/node-app/build? --user admin:f3dda4cb641a40efa794c0a7979818f2"
+        
+
