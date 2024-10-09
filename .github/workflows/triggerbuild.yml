@@ -1,10 +1,8 @@
 name: Trigger Jenkins Build on Commit
-
 on:
   push:
     branches:
       - main
-
 jobs:
   trigger-jenkins:
     runs-on: ubuntu-latest
