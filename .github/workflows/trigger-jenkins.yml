@@ -11,6 +11,6 @@ jobs:
     steps:
       - name: Trigger Jenkins Build
         run: |
-          curl -X POST "http://13.60.193.240:8080/job/node-app/build? --user admin:saish"
+          curl -X POST "http://13.60.193.240:8080/job/node-app/build?"
         
 
