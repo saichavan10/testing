@@ -10,13 +10,13 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t node-app-repo .
-      - docker tag node-app-repo:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/node-app-repo:latest
+      - docker tag node-app-repo:latest 619071350569.dkr.ecr.eu-north-1.amazonaws.com/node-app-repo:latest
   post_build:
     commands:
       - echo Pushing the Docker image...
-      - docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/node-app-repo:latest
+      - docker push 619071350569.dkr.ecr.eu-north-1.amazonaws.com/node-app-repo:latest
       - echo Writing image definitions file...
-      - printf '[{"name":"node-app-container","imageUri":"%s"}]' <aws_account_id>.dkr.ecr.<region>.amazonaws.com/node-app-repo:latest > imagedefinitions.json
+      - printf '[{"name":"node-app-container","imageUri":"%s"}]' 619071350569.dkr.ecr.eu-north-1.amazonaws.com/node-app-repo:latest > imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json
