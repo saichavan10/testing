@@ -1,12 +1,23 @@
 version: 0.2
 
 phases:
-  install:
+  pre_build:
     commands:
-      - npm install
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 619071350569.dkr.ecr.<region>.amazonaws.com
   build:
     commands:
-      - npm run build
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t node-app-repo .
+      - docker tag node-app-repo:latest <aws_account_id>.dkr.ecr.<region>.amazonaws.com/node-app-repo:latest
+  post_build:
+    commands:
+      - echo Pushing the Docker image...
+      - docker push <aws_account_id>.dkr.ecr.<region>.amazonaws.com/node-app-repo:latest
+      - echo Writing image definitions file...
+      - printf '[{"name":"node-app-container","imageUri":"%s"}]' <aws_account_id>.dkr.ecr.<region>.amazonaws.com/node-app-repo:latest > imagedefinitions.json
 artifacts:
   files:
-    - '**/*'
+    - imagedefinitions.json
+
