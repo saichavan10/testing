@@ -4,7 +4,14 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 619071350569.dkr.ecr.eu-north-1.amazonaws.com
+      - echo "Checking Docker version..."
+      - docker --version  # Optional: Check Docker installation
+      - |
+        # Attempt ECR login
+        if ! $(aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 619071350569.dkr.ecr.eu-north-1.amazonaws.com); then
+          echo "ECR login failed!"
+          exit 1
+        fi
   build:
     commands:
       - echo Build started on `date`
